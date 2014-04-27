@@ -1,55 +1,59 @@
-define([], function() {
+define(['jquery'], function($) {
     var that = this;
-    that.tries = 0;
-    that.code = '';
-    that.MAX_TRIES = 15;
-    
+    var tries = 0;
+    var code = '';
+    var MAX_TRIES = 15;
     
     that.validateUserCode = function (generatedCode, userCode) {
-        var resultado = "";
+        var GOOD_CHAR_AND_POSITION = 'X';
+        var GOOD_CHAR_BAD_POSITION = '*';
+        var CHAR_NOT_FOUND = '';
+        var matches = '';
         for(var i in generatedCode) {
-            resultado += generatedCode[i] === userCode[i] 
-                ? 'X'
+            matches += generatedCode[i] === userCode[i] 
+                ? GOOD_CHAR_AND_POSITION
                 : userCode.indexOf(generatedCode[i]) >= 0
-                    ? '*'
-                    : '';
+                    ? GOOD_CHAR_BAD_POSITION
+                    : CHAR_NOT_FOUND;
         }
-        return resultado;
+        return matches;
     };    
     
     that.tryUserCode = function (generatedCode, userCode) {
-        if (tries >= MAX_TRIES)
-            return 'TE HA PILLADO EL DOCTOR MALIGNO';
-
-        tries++;            
-        return that.validateUserCode(generatedCode, userCode);            
+        if (tries >= MAX_TRIES) return null;
+        
+        tries++;         
+        return that.validateUserCode(generatedCode, userCode);
     };
 
     
     that.generateSecurityCode = function () {
-        var carValidos = 'RMAVNI';
-        var codigo = "";
+        var CODE_LEN = 4;
+        var VALID_CHARS = 'RMAVNI';
+        var VALID_CHARS_COUNT = VALID_CHARS.length;
+        var code = '';
 
-        for (var i = 1; i <= 4; i++)
-            codigo += carValidos[Math.floor(Math.random() * carValidos.length)];
-        return codigo;
+        for (var i = 1; i <= CODE_LEN; i++)
+            code += VALID_CHARS[Math.floor(Math.random() * VALID_CHARS_COUNT)];
+        return code;
     };
     
     that.getTries = function () {
-        return that.tries;
+        return tries;
     };
     
-    that.btnAbrir_click = function () {
-        var resultado = that.tryUserCode(that.code, $('#tbxUserCode').val());
-        if (resultado === 'XXXX')
-            alert('Puerta abierta');
-        else
-            alert(resultado);
+    that.play = function (userCode) {
+        var matches = that.tryUserCode(code, userCode);
+        return matches === 'XXXX'
+            ? 'Puerta abierta'
+            : (tries < 15)
+                ? 'Pista: ' + matches
+                : 'Lo siento, no has acertado. El código era: ' + code;
     };
     
     that.startGame = function () {
-        that.tries = 0;
-        that.code = that.generateSecurityCode();
+        tries = 0;
+        code = that.generateSecurityCode();
     };
     
     return that;

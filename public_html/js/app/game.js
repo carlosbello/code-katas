@@ -9,6 +9,7 @@ requirejs.config({
 
 require(['app/game_logic', 'jquery'], function (logic, $) {
     logic.startGame();
-    $('#btnAbrir').click(logic.btnAbrir_click);
-    window.logic = logic;
+    $('#btnAbrir').click(function () {
+        alert(logic.play($('#tbxUserCode').val()));
+    });
 });
