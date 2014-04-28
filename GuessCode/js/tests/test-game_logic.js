@@ -25,6 +25,10 @@ define(['qunit', 'app/game_logic'], function (q, logic) {
                 'Coincidencia en color');
             equal(logic.validateUserCode('RMAV', 'NNAN'), 'X', 
                 'Coincidencia en color y posición');
+            equal(logic.validateUserCode('MANI', 'NANA'), 'XX',
+                'Coincidencia de dos colores y posiciones');
+            equal(logic.validateUserCode('MANI', 'MIRV'), 'X*',
+                'Coincidencia de dos colores y una posición');
         });
         
         test('tryUserCode()', function () {
