@@ -1,3 +1,3 @@
 # CodeKatas
 
-Colección de soluciones a code katas.
+Colección de code katas y sus soluciones.
