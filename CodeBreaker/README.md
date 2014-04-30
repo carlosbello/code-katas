@@ -17,3 +17,9 @@ en el espacio cedido por http://www.materiagriscoworking.com/
 
 Por ejemplo, si el código es MANI y el usuario indica NANA, se devolverá la 
 pista'XX', o si indica MIRV, se devolverá 'X*'.
+
+## La solución original
+
+La solución _quick & dirty_, del día del Katayuno, puede verse en el primer commit, aquí:
+
+https://github.com/carlosbello/code-katas/tree/789d9284bd0d7ebe7ca1661744dee635fc286784/public_html
