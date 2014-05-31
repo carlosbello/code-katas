@@ -1,7 +1,7 @@
 /**
  * Pruebas unitarias de la lógica del juego
  * @param {object} q - Framework de pruebas
- * @param {object} logic - Lógioca del juego
+ * @param {object} logic - Lógica del juego
  * @returns {function} Función que ejecuta todos los conjuntos de pruebas
  * @author Joaquin Fernández, Carlos Bello, Carlos Ivan Martín
  */
@@ -74,13 +74,13 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
                 }
             };
                         
-            deepEqual(incrementarPuntuacion(tanteo, JUGADOR1), tanteoEsperado1,
+            deepEqual(logic.incrementarPuntuacion(tanteo, JUGADOR1), tanteoEsperado1,
                 'El tanteo debe ser 15 0');
-            deepEqual(incrementarPuntuacion(tanteo, JUGADOR2), tanteoEsperado2,
+            deepEqual(logic.incrementarPuntuacion(tanteo, JUGADOR2), tanteoEsperado2,
                 'El tanteo debe ser 15 15');
-            deepEqual(incrementarPuntuacion(tanteo, JUGADOR2), tanteoEsperado3,
+            deepEqual(logic.incrementarPuntuacion(tanteo, JUGADOR2), tanteoEsperado3,
                 'El tanteo debe ser 15 30');
-            deepEqual(incrementarPuntuacion(tanteo, JUGADOR2), tanteoEsperado4,
+            deepEqual(logic.incrementarPuntuacion(tanteo, JUGADOR2), tanteoEsperado4,
                 'El tanteo debe ser 15 40');
         });
     }
@@ -128,17 +128,17 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
                     jugador2: 0
                 }
             };
-            deepEqual(incrementarPuntuacion(tanteo, JUGADOR2), tanteoEsperado1,
+            deepEqual(logic.incrementarPuntuacion(tanteo, JUGADOR2), tanteoEsperado1,
                 'El tanteo debe ser 0 0 y juegos 0 1');                
-            deepEqual(incrementarPuntuacion(tanteo2, JUGADOR1), tanteoEsperado2,
+            deepEqual(logic.incrementarPuntuacion(tanteo2, JUGADOR1), tanteoEsperado2,
                 'El tanteo debe ser 0 0 y juegos 1 0');                
         });
     }
     
-     /**
-     * Prueba para veririficar la igualdad de puntos
-     * @author Carlos Ivan Martín, Carlos Bello 
-     */
+    /**
+    * Prueba para veririficar la igualdad de puntos
+    * @author Carlos Ivan Martín, Carlos Bello 
+    */
     function testIguales() {
         test('incrementarPuntuacion() y se queda iguales', function (){
             var tanteo = {
@@ -160,15 +160,15 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
                 }
             };
             
-            deepEqual(incrementarPuntuacion(tanteo, JUGADOR1), tanteoEsperado1,
+            deepEqual(logic.incrementarPuntuacion(tanteo, JUGADOR1), tanteoEsperado1,
                 'El tanteo debe ser 40 40 y juegos 0 0');                
         });
     }
     
-     /**
-     * Prueba para ganar el juego
-     * @author Carlos Ivan Martín, Carlos Bello 
-     */
+    /**
+    * Prueba para ganar el juego
+    * @author Carlos Ivan Martín, Carlos Bello 
+    */
     function testVentaja() {
         test('incrementarPuntuacion() y obtiene ventaja', function (){
             var tanteo = {
@@ -208,22 +208,40 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
                 }
             };
             
-            deepEqual(incrementarPuntuacion(tanteo, JUGADOR1), tanteoEsperado1,
+            deepEqual(logic.incrementarPuntuacion(tanteo, JUGADOR1), tanteoEsperado1,
                 'El tanteo debe ser 40 40 y ventaja JUGADOR1');                
-            deepEqual(incrementarPuntuacion(tanteo2, JUGADOR2), tanteoEsperado2,
+            deepEqual(logic.incrementarPuntuacion(tanteo2, JUGADOR2), tanteoEsperado2,
                 'El tanteo debe ser 40 40 y ventaja NULL');                
         });
     }
     
+    /**
+     * Verifica la identificación del ganador de un set
+     * @author Carlos Bello
+     */
+    function testGanador() {
+        test('ganador()', function () {
+            var tanteo = {
+                jugador1: 15,
+                jugador2: 40,
+                ventaja: null,
+                juegos : {
+                    jugador1: 0,
+                    jugador2: 6
+                }
+            };
+            equal(logic.ganador(tanteo), JUGADOR2,
+                'El ganador debe ser JUGADOR2');
+        });
+    }
+    
     function run() {
-        var JUGADOR1 = 'jugador1';
-        var JUGADOR2 = 'jugador2';
-        
         testIniciarTanteo();
         testIncrementarPuntuacion();
         testGanarJuego();
         testIguales();
         testVentaja();
+        testGanador();
     }
     
     return {

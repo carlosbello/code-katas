@@ -1,5 +1,5 @@
 define(['jquery'], function($) {
-    var public = this;
+    var public = {};
     
     var valor = {
         0: 15,
@@ -19,15 +19,15 @@ define(['jquery'], function($) {
         };
     };
     
-    function ganarJuego (tanteo, jugador){
+    function ganarJuego(tanteo, jugador){
         tanteo.jugador1 = 0;
         tanteo.jugador2 = 0;
         tanteo.ventaja = null;
         tanteo.juegos[jugador]++;
+        
     }
     
-    public.incrementarPuntuacion = function (tanteo, jugador) {
-        
+    public.incrementarPuntuacion = function (tanteo, jugador) {        
         if (tanteo[jugador] <= 30)
             tanteo[jugador] = valor[tanteo[jugador]];
         else {
@@ -41,9 +41,16 @@ define(['jquery'], function($) {
             }
             else
                 ganarJuego(tanteo,jugador);
-        }
-        
+        }        
         return tanteo;
+    };
+    
+    public.ganador = function(tanteo) {
+        return tanteo.juegos.jugador1 === 6
+            ? 'jugador1'
+            :  tanteo.juegos.jugador2 === 6
+                ? 'jugador2'
+                : null;
     };
     
     return public;
