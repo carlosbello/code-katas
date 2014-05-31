@@ -109,13 +109,34 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
                     jugador2: 1
                 }
             };
+            
+            var tanteo2 = {
+                jugador1: 40,
+                jugador2: 40,
+                ventaja: JUGADOR1,
+                juegos : {
+                    jugador1: 0,
+                    jugador2: 0
+                }
+            };
+            var tanteoEsperado2 = {
+                jugador1: 0,
+                jugador2: 0,
+                ventaja: null,
+                juegos: {
+                    jugador1: 1,
+                    jugador2: 0
+                }
+            };
             deepEqual(incrementarPuntuacion(tanteo, JUGADOR2), tanteoEsperado1,
                 'El tanteo debe ser 0 0 y juegos 0 1');                
+            deepEqual(incrementarPuntuacion(tanteo2, JUGADOR1), tanteoEsperado2,
+                'El tanteo debe ser 0 0 y juegos 1 0');                
         });
     }
     
      /**
-     * Prueba para ganar el juego
+     * Prueba para veririficar la igualdad de puntos
      * @author Carlos Ivan Martín, Carlos Bello 
      */
     function testIguales() {
@@ -168,9 +189,29 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
                     jugador2: 0
                 }
             };
+            var tanteo2 = {
+                jugador1: 40,
+                jugador2: 40,
+                ventaja: JUGADOR1,
+                juegos : {
+                    jugador1: 0,
+                    jugador2: 0
+                }
+            };
+            var tanteoEsperado2 = {
+                jugador1: 40,
+                jugador2: 40,
+                ventaja: null,
+                juegos: {
+                    jugador1: 0,
+                    jugador2: 0
+                }
+            };
             
             deepEqual(incrementarPuntuacion(tanteo, JUGADOR1), tanteoEsperado1,
                 'El tanteo debe ser 40 40 y ventaja JUGADOR1');                
+            deepEqual(incrementarPuntuacion(tanteo2, JUGADOR2), tanteoEsperado2,
+                'El tanteo debe ser 40 40 y ventaja NULL');                
         });
     }
     

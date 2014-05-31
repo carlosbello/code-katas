@@ -22,6 +22,7 @@ define(['jquery'], function($) {
     function ganarJuego (tanteo, jugador){
         tanteo.jugador1 = 0;
         tanteo.jugador2 = 0;
+        tanteo.ventaja = null;
         tanteo.juegos[jugador]++;
     }
     
