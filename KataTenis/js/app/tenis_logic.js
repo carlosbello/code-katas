@@ -1,5 +1,10 @@
-define(['jquery'], function($) {
-    var public = {};
+define(function() {
+    var public = {
+        JUGADOR1: 'jugador1',
+        JUGADOR2: 'jugador2',
+        CANT_MAX_JUEGOS: 6,
+        CANT_MAX_PUNTOS: 40
+    };
     
     var valor = {
         0: 15,
@@ -7,7 +12,7 @@ define(['jquery'], function($) {
         30: 40
     };
     
-    public.iniciarTanteo = function () {
+    public.iniciarConteo = function () {
         return {
             jugador1: 0,
             jugador2: 0,
@@ -19,37 +24,38 @@ define(['jquery'], function($) {
         };
     };
     
-    function ganarJuego(tanteo, jugador){
-        tanteo.jugador1 = 0;
-        tanteo.jugador2 = 0;
-        tanteo.ventaja = null;
-        tanteo.juegos[jugador]++;
-        
+    function ganarJuego(conteo, jugador){
+        conteo.jugador1 = 0;
+        conteo.jugador2 = 0;
+        conteo.ventaja = null;
+        conteo.juegos[jugador]++;        
     }
     
-    public.incrementarPuntuacion = function (tanteo, jugador) {        
-        if (tanteo[jugador] <= 30)
-            tanteo[jugador] = valor[tanteo[jugador]];
-        else {
-            if(tanteo.jugador1 === 40 && tanteo.jugador2 === 40 ){
-                if(tanteo.ventaja == null)
-                    tanteo.ventaja = jugador;
-                else if (tanteo.ventaja != jugador)
-                    tanteo.ventaja = null;
-                else
-                    ganarJuego(tanteo,jugador);
-            }
-            else
-                ganarJuego(tanteo,jugador);
-        }        
-        return tanteo;
+    function hayEmpate(conteo) {
+        return conteo.jugador1 === public.CANT_MAX_PUNTOS && 
+               conteo.jugador2 === public.CANT_MAX_PUNTOS;
+    }
+    
+    public.incrementarPuntuacion = function (conteo, jugador) {        
+        if (conteo[jugador] < public.CANT_MAX_PUNTOS)
+            conteo[jugador] = valor[conteo[jugador]];
+        else if(hayEmpate(conteo)) {
+            if (conteo.ventaja === jugador)
+                ganarJuego(conteo, jugador);
+            else 
+                conteo.ventaja = conteo.ventaja === null
+                    ? jugador
+                    : null;
+        } else
+            ganarJuego(conteo, jugador);    
+        return conteo;
     };
     
-    public.ganador = function(tanteo) {
-        return tanteo.juegos.jugador1 === 6
-            ? 'jugador1'
-            :  tanteo.juegos.jugador2 === 6
-                ? 'jugador2'
+    public.ganador = function(conteo) {
+        return conteo.juegos.jugador1 === public.CANT_MAX_JUEGOS
+            ? public.JUGADOR1
+            :  conteo.juegos.jugador2 === public.CANT_MAX_JUEGOS
+                ? public.JUGADOR2
                 : null;
     };
     

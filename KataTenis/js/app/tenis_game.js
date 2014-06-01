@@ -6,12 +6,16 @@ requirejs.config({
     }
 });
 
-
+/**
+ * Gestión de eventos de la interfaz
+ * @param {object} logic - Lógica del juego
+ * @param {object} $ - jQuery
+ */
 require(['app/tenis_logic', 'jquery'], function (logic, $) {
     var conteo = null;
     
     function iniciarJuego() {
-        conteo = logic.iniciarTanteo();
+        conteo = logic.iniciarConteo();
     }
     
     function actualizarEstado() {

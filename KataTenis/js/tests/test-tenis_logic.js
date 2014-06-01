@@ -6,16 +6,14 @@
  * @author Joaquin Fernández, Carlos Bello, Carlos Ivan Martín
  */
 define(['qunit', 'app/tenis_logic'], function (q, logic) {
-    var JUGADOR1 = 'jugador1';
-    var JUGADOR2 = 'jugador2';
-    
+   
     /**
      * Inicialización del juego
      * @author Joaquin Fernández, Carlos Bello, Carlos Ivan Martín
      */
-    function testIniciarTanteo() {
-        test('iniciarTanteo()', function () {
-            var tanteoEsperado = {
+    function testIniciarConteo() {
+        test('iniciarConteo()', function () {
+            var conteoEsperado = {
                 jugador1: 0,
                 jugador2: 0,
                 ventaja: null,
@@ -25,8 +23,8 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
                 }
             };
             
-            deepEqual(logic.iniciarTanteo(), tanteoEsperado,
-                'El tanteo inicial debe ser 0 para ambos jugadores');
+            deepEqual(logic.iniciarConteo(), conteoEsperado,
+                'El conteo inicial debe ser 0 para ambos jugadores');
         });
     }
 
@@ -36,8 +34,8 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
      */
     function testIncrementarPuntuacion() {
         test('incrementarPuntuacion()', function () {
-            var tanteo = logic.iniciarTanteo();
-            var tanteoEsperado1 = {
+            var conteo = logic.iniciarConteo();
+            var conteoEsperado1 = {
                 jugador1: 15,
                 jugador2: 0,
                 ventaja: null,
@@ -46,7 +44,7 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
                     jugador2: 0
                 }
             };
-            var tanteoEsperado2 = {
+            var conteoEsperado2 = {
                 jugador1: 15,
                 jugador2: 15,
                 ventaja: null,
@@ -55,7 +53,7 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
                     jugador2: 0
                 }
             };
-            var tanteoEsperado3 = {
+            var conteoEsperado3 = {
                 jugador1: 15,
                 jugador2: 30,
                 ventaja: null,
@@ -64,7 +62,7 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
                     jugador2: 0
                 }
             };
-            var tanteoEsperado4 = {
+            var conteoEsperado4 = {
                 jugador1: 15,
                 jugador2: 40,
                 ventaja: null,
@@ -74,14 +72,14 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
                 }
             };
                         
-            deepEqual(logic.incrementarPuntuacion(tanteo, JUGADOR1), tanteoEsperado1,
-                'El tanteo debe ser 15 0');
-            deepEqual(logic.incrementarPuntuacion(tanteo, JUGADOR2), tanteoEsperado2,
-                'El tanteo debe ser 15 15');
-            deepEqual(logic.incrementarPuntuacion(tanteo, JUGADOR2), tanteoEsperado3,
-                'El tanteo debe ser 15 30');
-            deepEqual(logic.incrementarPuntuacion(tanteo, JUGADOR2), tanteoEsperado4,
-                'El tanteo debe ser 15 40');
+            deepEqual(logic.incrementarPuntuacion(conteo, logic.JUGADOR1), conteoEsperado1,
+                'El conteo debe ser 15 0');
+            deepEqual(logic.incrementarPuntuacion(conteo, logic.JUGADOR2), conteoEsperado2,
+                'El conteo debe ser 15 15');
+            deepEqual(logic.incrementarPuntuacion(conteo, logic.JUGADOR2), conteoEsperado3,
+                'El conteo debe ser 15 30');
+            deepEqual(logic.incrementarPuntuacion(conteo, logic.JUGADOR2), conteoEsperado4,
+                'El conteo debe ser 15 40');
         });
     }
     
@@ -91,7 +89,7 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
      */
     function testGanarJuego() {
         test('incrementarPuntuacion() y ganar juego', function (){
-            var tanteo = {
+            var conteo = {
                 jugador1: 15,
                 jugador2: 40,
                 ventaja: null,
@@ -100,7 +98,7 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
                     jugador2: 0
                 }
             };
-            var tanteoEsperado1 = {
+            var conteoEsperado1 = {
                 jugador1: 0,
                 jugador2: 0,
                 ventaja: null,
@@ -110,16 +108,16 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
                 }
             };
             
-            var tanteo2 = {
+            var conteo2 = {
                 jugador1: 40,
                 jugador2: 40,
-                ventaja: JUGADOR1,
+                ventaja: logic.JUGADOR1,
                 juegos : {
                     jugador1: 0,
                     jugador2: 0
                 }
             };
-            var tanteoEsperado2 = {
+            var conteoEsperado2 = {
                 jugador1: 0,
                 jugador2: 0,
                 ventaja: null,
@@ -128,10 +126,10 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
                     jugador2: 0
                 }
             };
-            deepEqual(logic.incrementarPuntuacion(tanteo, JUGADOR2), tanteoEsperado1,
-                'El tanteo debe ser 0 0 y juegos 0 1');                
-            deepEqual(logic.incrementarPuntuacion(tanteo2, JUGADOR1), tanteoEsperado2,
-                'El tanteo debe ser 0 0 y juegos 1 0');                
+            deepEqual(logic.incrementarPuntuacion(conteo, logic.JUGADOR2), conteoEsperado1,
+                'El conteo debe ser 0 0 y juegos 0 1');                
+            deepEqual(logic.incrementarPuntuacion(conteo2, logic.JUGADOR1), conteoEsperado2,
+                'El conteo debe ser 0 0 y juegos 1 0');                
         });
     }
     
@@ -141,7 +139,7 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
     */
     function testIguales() {
         test('incrementarPuntuacion() y se queda iguales', function (){
-            var tanteo = {
+            var conteo = {
                 jugador1: 30,
                 jugador2: 40,
                 ventaja: null,
@@ -150,7 +148,7 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
                     jugador2: 0
                 }
             };
-            var tanteoEsperado1 = {
+            var conteoEsperado1 = {
                 jugador1: 40,
                 jugador2: 40,
                 ventaja: null,
@@ -160,8 +158,8 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
                 }
             };
             
-            deepEqual(logic.incrementarPuntuacion(tanteo, JUGADOR1), tanteoEsperado1,
-                'El tanteo debe ser 40 40 y juegos 0 0');                
+            deepEqual(logic.incrementarPuntuacion(conteo, logic.JUGADOR1), conteoEsperado1,
+                'El conteo debe ser 40 40 y juegos 0 0');                
         });
     }
     
@@ -170,8 +168,8 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
     * @author Carlos Ivan Martín, Carlos Bello 
     */
     function testVentaja() {
-        test('incrementarPuntuacion() y obtiene ventaja', function (){
-            var tanteo = {
+        test('incrementarPuntuacion() y obtiene o pierde ventaja', function (){
+            var conteo = {
                 jugador1: 40,
                 jugador2: 40,
                 ventaja: null,
@@ -180,25 +178,25 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
                     jugador2: 0
                 }
             };
-            var tanteoEsperado1 = {
+            var conteoEsperado1 = {
                 jugador1: 40,
                 jugador2: 40,
-                ventaja: JUGADOR1,
+                ventaja: logic.JUGADOR1,
                 juegos: {
                     jugador1: 0,
                     jugador2: 0
                 }
             };
-            var tanteo2 = {
+            var conteo2 = {
                 jugador1: 40,
                 jugador2: 40,
-                ventaja: JUGADOR1,
+                ventaja: logic.JUGADOR1,
                 juegos : {
                     jugador1: 0,
                     jugador2: 0
                 }
             };
-            var tanteoEsperado2 = {
+            var conteoEsperado2 = {
                 jugador1: 40,
                 jugador2: 40,
                 ventaja: null,
@@ -208,10 +206,10 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
                 }
             };
             
-            deepEqual(logic.incrementarPuntuacion(tanteo, JUGADOR1), tanteoEsperado1,
-                'El tanteo debe ser 40 40 y ventaja JUGADOR1');                
-            deepEqual(logic.incrementarPuntuacion(tanteo2, JUGADOR2), tanteoEsperado2,
-                'El tanteo debe ser 40 40 y ventaja NULL');                
+            deepEqual(logic.incrementarPuntuacion(conteo, logic.JUGADOR1), conteoEsperado1,
+                'El conteo debe ser 40 40 y ventaja JUGADOR1');                
+            deepEqual(logic.incrementarPuntuacion(conteo2, logic.JUGADOR2), conteoEsperado2,
+                'El conteo debe ser 40 40 y ventaja NULL');                
         });
     }
     
@@ -221,7 +219,7 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
      */
     function testGanador() {
         test('ganador()', function () {
-            var tanteo = {
+            var conteo = {
                 jugador1: 15,
                 jugador2: 40,
                 ventaja: null,
@@ -230,13 +228,13 @@ define(['qunit', 'app/tenis_logic'], function (q, logic) {
                     jugador2: 6
                 }
             };
-            equal(logic.ganador(tanteo), JUGADOR2,
+            equal(logic.ganador(conteo), logic.JUGADOR2,
                 'El ganador debe ser JUGADOR2');
         });
     }
     
     function run() {
-        testIniciarTanteo();
+        testIniciarConteo();
         testIncrementarPuntuacion();
         testGanarJuego();
         testIguales();
