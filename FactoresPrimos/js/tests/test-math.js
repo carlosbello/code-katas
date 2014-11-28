@@ -21,8 +21,23 @@ define(['qunit', 'app/math'], function (q, math) {
         });
     }
 
+    function testEsMayorZero() {
+        test('testEsMayorZero()', function (assert) {
+            var entero = 4;
+            var negativo = -2;
+            var zero = 0;
+                        
+            assert.ok(math.esMayorZero(entero), 'El número es mayor que zero');
+            assert.equal(math.esMayorZero(negativo), false, "Un negativo no es entero");
+            assert.equal(math.esMayorZero(zero), false, "Un zero no es entero");
+            
+            
+        });
+    }
+
     function run () {
         testEsEntero();
+        testEsMayorZero();
     }
     
     return { 

@@ -6,5 +6,9 @@ define(['jquery'], function($) {
                 Math.round(valor) === valor;
     };
     
+    public.esMayorZero = function (valor) {
+        return valor > 0;
+    }
+    
     return public;
 });
