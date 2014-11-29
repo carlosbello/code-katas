@@ -30,14 +30,31 @@ define(['qunit', 'app/math'], function (q, math) {
             assert.ok(math.esMayorZero(entero), 'El número es mayor que zero');
             assert.equal(math.esMayorZero(negativo), false, "Un negativo no es entero");
             assert.equal(math.esMayorZero(zero), false, "Un zero no es entero");
-            
-            
+        });
+    }
+    
+    function testGenerarFactoresPrimosDePrimos() {
+        test('testGenerarFactoresPrimosDePrimos()', function (assert) {
+            var NUMERO = 0,
+                RESULTADO = 1,
+                MENSAJE = 2,            
+                PRUEBAS = [
+                    [2, [2], 'Factores de 2'],
+                    [3, [3], 'Factores de 3'],
+                    [7, [7], 'Factores de 7'],
+                    [41, [41], 'Factores de 41']
+                ];
+                
+           PRUEBAS.forEach(function (prueba) {
+               assert.deepEqual(math.generarFactoresPrimos(prueba[NUMERO]), prueba[RESULTADO], prueba[MENSAJE]);
+           });
         });
     }
 
     function run () {
         testEsEntero();
         testEsMayorZero();
+        testGenerarFactoresPrimosDePrimos();
     }
     
     return { 

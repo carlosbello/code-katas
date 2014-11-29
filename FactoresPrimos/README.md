@@ -1,4 +1,4 @@
-# XX - Katayuno del viernes 28/11/2014
+# FactoresPrimos - Katayuno del viernes 28/11/2014
 
 Solución del Code Kata organizado por http://aprendiendotdd.com
 en el espacio cedido por http://www.materiagriscoworking.com/
